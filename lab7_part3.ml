@@ -61,16 +61,22 @@ module IntListStack =
     type stack = int list
 
     (* empty -- An empty stack *)
-    let empty : stack = failwith "not implemented"
+    let empty : stack = []
 
     (* push i s -- Adds an integer element i to the top of stack s *)
-    let push (i : int) (s : stack) : stack = failwith "not implemented"
+    let push (i : int) (s : stack) : stack = [i] @ stack
 
     (* top s -- Returns the value of the topmost element on stack s *)
-    let top (s : stack) : int = failwith "not implemented"
+    let top (s : stack) : int =
+        match s with
+        | [] -> raise (EmptyStack "empty stack")
+        | hd::tl -> hd
 
     (* pop s -- Returns a stack with the topmost element from s removed *)
-    let pop (s : stack) : stack = failwith "not implemented"
+    let pop (s : stack) : stack =
+        match s with
+        | [] -> raise (EmptyStack "empty stack")
+        | hd::tl -> tl
   end ;;
 
 (* Now let's use this implementation and consider some implications.
@@ -130,7 +136,7 @@ manually?"
 Several reasons:
 
 First, as we've just done, it was entirely possible for a user
-of the module to completely modify a value in its internal representation. 
+of the module to completely modify a value in its internal representation.
 Imagine what would happen for a more complex module that allowed us to
 break an invariant! From Problem Set 3, what would break if a person
 could change a zero bignum to set the negative flag? Or construct a
